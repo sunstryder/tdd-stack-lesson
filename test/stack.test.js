@@ -1,3 +1,5 @@
+import { Stack } from '../lib/stack';
+
 // Create a stack data structure in JS without using arrays.
 // First in first out.
 // Needs the following methods:
@@ -6,30 +8,6 @@
 // length
 // peek
 // clear
-
-class Stack {
-  constructor() {
-    this.top = -1;
-    this.items = {};
-    // example items:
-    // const items = {
-    //   0: 'a',
-    //   1: 'b',
-    //   2: 'c'
-    // };
-}
-
-  push(value)
-  {
-    this.top++;
-    this.items[this.top] = value;
-  } 
-
-  pop() { 
-    this.top--;
-    delete this.items[this.top]
-  }
-}
 
 describe('Stack', () => {
   let stack;
@@ -64,11 +42,25 @@ describe('Stack', () => {
    });
   
 // length
-  it.todo('can check length of stack')
+  it('can check length of stack', () => {
+    stack.push('a');
+    expect(stack.getLength()).toEqual(1);
+  });
   
 // peek
-  it.todo('can get top of stack')
+  it('can get top of stack', () => {
+    stack.push('a');
+    stack.push('b');
+    stack.push('c');
+    expect(stack.peek()).toEqual('c');
+  });
   
 // clear
-  it.todo('can delete entire stack')
+  it('can clear all items in stack',()=>{
+    stack.push('a');
+    stack.push('b');
+    stack.clear();
+    expect(stack.top).toBe(-1);
+    expect(Object.keys(stack.items).length).toBe(0);
+  });
 });
