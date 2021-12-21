@@ -73,23 +73,27 @@ describe('Stack', () => {
     });
   });
 
-  
+  describe('peek', ()=>{
+    it('returns "Stack is empty" message when the stack is empty', () => {
+      expect(stack.peek()).toEqual('Stack is empty');
+    }) 
+
+    it('gets the top of the stack if there are items in stack', () => {
+      stack.push('a');
+      stack.push('b');
+      stack.push('c');
+      expect(stack.peek()).toEqual('c');
+    });
+  });
+
+  describe('clear', ()=>{
+    it('can clear all items in the full stack',()=>{
+      stack.push('a');
+      stack.push('b');
+      stack.clear();
+      expect(stack.top).toBe(-1);
+      expect(Object.keys(stack.items).length).toBe(0);
+    });
+  });
 
 });
-
-// // peek
-//   it('can get top of stack', () => {
-//     stack.push('a');
-//     stack.push('b');
-//     stack.push('c');
-//     expect(stack.peek()).toEqual('c');
-//   });
-  
-// // clear
-//   it('can clear all items in stack',()=>{
-//     stack.push('a');
-//     stack.push('b');
-//     stack.clear();
-//     expect(stack.top).toBe(-1);
-//     expect(Object.keys(stack.items).length).toBe(0);
-//   });
