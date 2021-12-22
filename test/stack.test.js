@@ -38,7 +38,18 @@ describe('Stack', () => {
       stack.push('topItem');
       expect(stack.items[0]).toBeTruthy();
     });
-  })
+  });
+
+  describe('length', () =>{
+    it('returns 0 when the stack is empty', () => {
+      expect(stack.length).toEqual(0);
+    });
+
+    it('returns the correct length when there are items in the stack', () => {
+      stack.push('a');
+      expect(stack.length).toEqual(1);
+    });
+  });
 
   describe('push', ()=>{
     it('can push to top of stack', () => {
@@ -62,17 +73,6 @@ describe('Stack', () => {
     });
   });
 
-  describe('getLength', () =>{
-    it('returns 0 when the stack is empty', () => {
-      expect(stack.getLength()).toEqual(0);
-    });
-
-    it('returns the correct length when there are items in the stack', () => {
-      stack.push('a');
-      expect(stack.getLength()).toEqual(1);
-    });
-  });
-
   describe('peek', ()=>{
     it('returns "Stack is empty" message when the stack is empty', () => {
       expect(stack.peek()).toEqual('Stack is empty');
@@ -93,7 +93,7 @@ describe('Stack', () => {
       stack.clear();
       expect(stack.top).toBe(-1);
       expect(Object.keys(stack.items).length).toBe(0);
+      expect(stack.length).toBe(0);
     });
   });
-
 });
