@@ -1,3 +1,5 @@
+import { Stack } from '../lib/stack';
+
 // Create a stack data structure in JS without using arrays.
 // First in first out.
 // Needs the following methods:
@@ -7,30 +9,6 @@
 // peek
 // clear
 
-class Stack {
-  constructor() {
-    this.top = -1;
-    this.items = {};
-    // example items:
-    // const items = {
-    //   0: 'a',
-    //   1: 'b',
-    //   2: 'c'
-    // };
-}
-
-  push(value)
-  {
-    this.top++;
-    this.items[this.top] = value;
-  } 
-
-  pop() { 
-    this.top--;
-    delete this.items[this.top]
-  }
-}
-
 describe('Stack', () => {
   let stack;
 
@@ -38,37 +16,84 @@ describe('Stack', () => {
     stack = new Stack();
   });
 
-  // top
-  it('has a reference to top item', () => { 
-    expect(stack.top).toEqual(-1);
-  })
+  describe('top', ()=>{
+    it('returns -1 when the stack is empty', ()=>{
+      expect(stack.top).toEqual(-1);
+    });
 
-  // items
-  it('holds a collection of all items', () => {
-    expect(stack.items).toEqual({});
-  })
-
-  // push
-  it('can push to top of stack', () => {
-    stack.push('a');
-    expect(Object.keys(stack.items).length).toStrictEqual(1);
-    expect(stack.items[0]).toEqual("a");
+    it('returns the correct top item', ()=>{
+      stack.push('topItem');
+      stack.push('second');
+      stack.pop();
+      expect(stack.items[stack.top]).toBe('topItem');
+    });
   });
-  
-  // pop
-  it('can pop off top of stack', () => {
-    stack.push('a');
-    stack.pop();
-    expect(stack.top).toEqual(-1);
 
-   });
-  
-// length
-  it.todo('can check length of stack')
-  
-// peek
-  it.todo('can get top of stack')
-  
-// clear
-  it.todo('can delete entire stack')
+  describe('items', ()=>{
+    it('returns an empty object when the stack is empty', ()=>{
+      expect(stack.items).toEqual({});
+    });
+    
+    it('returns a non-empty object after an item has been added to the stack',()=>{
+      stack.push('topItem');
+      expect(stack.items[0]).toBeTruthy();
+    });
+  });
+
+  describe('length', () =>{
+    it('returns 0 when the stack is empty', () => {
+      expect(stack.length).toEqual(0);
+    });
+
+    it('returns the correct length when there are items in the stack', () => {
+      stack.push('a');
+      expect(stack.length).toEqual(1);
+    });
+  });
+
+  describe('push', ()=>{
+    it('can push to top of stack', () => {
+      stack.push('a')
+      expect(Object.keys(stack.items).length).toEqual(1);
+      expect(stack.items[0]).toEqual("a");
+    });
+  });
+
+  describe('pop',()=>{
+    it('throws error when the stack is empty with correct error message',() => {
+      expect(() => stack.pop()).toThrow("Stack empty, nothing to pop");
+    });
+    
+    it('pops off top of stack', () => {
+      stack.push('a');
+      stack.push('b');
+      stack.pop();
+      expect(Object.values(stack.items)).toContain('a');
+      expect(Object.values(stack.items)).not.toContain('b');
+    });
+  });
+
+  describe('peek', ()=>{
+    it('returns "Stack is empty" message when the stack is empty', () => {
+      expect(stack.peek()).toEqual('Stack is empty');
+    }) 
+
+    it('gets the top of the stack if there are items in stack', () => {
+      stack.push('a');
+      stack.push('b');
+      stack.push('c');
+      expect(stack.peek()).toEqual('c');
+    });
+  });
+
+  describe('clear', ()=>{
+    it('can clear all items in the full stack',()=>{
+      stack.push('a');
+      stack.push('b');
+      stack.clear();
+      expect(stack.top).toBe(-1);
+      expect(Object.keys(stack.items).length).toBe(0);
+      expect(stack.length).toBe(0);
+    });
+  });
 });
